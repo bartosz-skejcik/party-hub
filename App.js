@@ -1,20 +1,101 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import Home from "./screens/Home.jsx";
+import Profile from "./screens/Profile.jsx";
+import CreateParty from "./screens/CreateParty.jsx";
+
+import { useFonts } from "expo-font";
+
+import { Ionicons } from "@expo/vector-icons";
+
+import { BlurView } from "expo-blur";
+import { View } from "react-native";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    const [fontsLoaded] = useFonts({
+        "Nunito-Medium": require("./assets/fonts/Nunito-Medium.ttf"),
+        "Nunito-SemiBold": require("./assets/fonts/Nunito-SemiBold.ttf"),
+        "Nunito-Bold": require("./assets/fonts/Nunito-Bold.ttf"),
+    });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    if (!fontsLoaded) {
+        return null;
+    }
+
+    return (
+        <NavigationContainer>
+            <Tab.Navigator
+                screenOptions={({ route }) => ({
+                    tabBarIcon: ({ focused, color, size }) => {
+                        let iconName;
+
+                        if (route.name === "Home") {
+                            iconName = "home-outline";
+                        } else if (route.name === "Profile") {
+                            iconName = "people-circle-outline";
+                        } else if (route.name === "Create Party") {
+                            iconName = "add-circle-outline";
+                        }
+
+                        // You can return any component that you like here!
+                        return (
+                            <Ionicons
+                                name={iconName}
+                                size={size}
+                                color={color}
+                            />
+                        );
+                    },
+                    tabBarActiveTintColor: "#AF70FF",
+                    tabBarInactiveTintColor: "#8444A3",
+                    tabBarStyle: {
+                        borderWidth: 0,
+                        borderTopWidth: 0,
+                        position: "absolute",
+                        bottom: 20,
+                        left: 20,
+                        right: 20,
+                        borderRadius: 100,
+                    },
+                    tabBarBackground: () => (
+                        <View
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: 150,
+                                overflow: "hidden",
+                            }}
+                        >
+                            <BlurView
+                                intensity={80}
+                                tint="dark"
+                                style={{
+                                    flex: 1,
+                                }}
+                            />
+                        </View>
+                    ),
+                })}
+            >
+                <Tab.Screen
+                    name="Home"
+                    component={Home}
+                    options={{ headerShown: false, tabBarShowLabel: false }}
+                />
+                <Tab.Screen
+                    name="Create Party"
+                    component={CreateParty}
+                    options={{ headerShown: false, tabBarShowLabel: false }}
+                />
+                <Tab.Screen
+                    name="Profile"
+                    component={Profile}
+                    options={{ headerShown: false, tabBarShowLabel: false }}
+                />
+            </Tab.Navigator>
+        </NavigationContainer>
+    );
+}
