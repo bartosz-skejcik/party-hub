@@ -12,6 +12,7 @@ export default function TopBar({
     return (
         <View className="absolute top-3 flex flex-row items-center justify-between w-screen py-4 px-4 max-h-20">
             <TouchableOpacity
+                onPress={func1}
                 className="flex py-2 px-5 rounded-full shadow-xl"
                 style={{
                     backgroundColor: "rgba(24, 24, 24, 0.44)",
@@ -27,6 +28,7 @@ export default function TopBar({
                 {title}
             </Text>
             <TouchableOpacity
+                onPress={func2}
                 className="flex py-2 px-5 rounded-full shadow-xl"
                 style={{
                     backgroundColor: "rgba(24, 24, 24, 0.44)",

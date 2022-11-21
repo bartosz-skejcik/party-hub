@@ -6,7 +6,7 @@ import TopBar from "../components/TopBar";
 
 import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 
-export default function CreateParty() {
+export default function CreateParty({ navigation }) {
     return (
         <View className="flex-1 items-center justify-center">
             <TopBar
@@ -15,6 +15,8 @@ export default function CreateParty() {
                 title={"Create party"}
                 Icons1={MaterialCommunityIcons}
                 Icons2={AntDesign}
+                // go to home screen on press
+                func1={() => navigation.navigate("Home")}
             />
             <Image source={bg} className="absolute -z-10" />
             <Text className="text-white">Create Party</Text>
